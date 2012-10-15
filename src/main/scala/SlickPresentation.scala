@@ -43,16 +43,22 @@ object SlickPresentation extends App{
       Task(5,"Task 5",4),
       Task(6,"Task 6",3)      
     )
+  }
     
+  session.withTransaction{
     // print certain people with their tasks
     val somePeople = Persons.above(21)
     val theirTasks = for( t <- Tasks; if t.personId in somePeople.map(_.id) ) yield t
     
+    println("\n\n")
+    println("-"*80)
     println( "=== people and their tasks ===" )
-    somePeople.sortBy(_.name).list.foreach{ p =>
+    somePeople.sortBy(_.name).foreach{ p =>
       print( p.name + ": " )
       println( theirTasks.filter(_.personId === p.id).map(_.title).list.mkString(", ") )
     }
+    println("-"*80)
+    println("\n\n")
   }
   session.close()
 }
