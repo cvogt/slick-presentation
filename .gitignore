@@ -1,4 +1,5 @@
 /.idea/
+*~
 target/
 /test-dbs/*-*
 /test-dbs/databases.properties
