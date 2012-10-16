@@ -5,32 +5,33 @@ http://slick.typesafe.com
 ://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80269142/
 http://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80268902/
 
-== To Run ==
+## To Run ##
 
-SBT 0.12
+Install SBT 0.12, available from
 http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html
 
-Make sure sbt is in your PATH.
+Make sure `sbt` is in your PATH.
 
 You then need to clone this project
-git clone git://github.com/cvogt/slick-presentation
+    git clone git://github.com/cvogt/slick-presentation
 
 Run the code example from SBT
-$ sbt run
+    $ sbt run
 
 Or, start sbt and run the code example from within sbt
-$ sbt
-> run
+    $ sbt
+    > run
 
-== Requirements ==
+## Requirements ##
 You can edit the example using your favorite editor or to get proper code completion you can use
 
-Eclipse 3.7
+Eclipse 3.7 (Juno), available from
 http://www.eclipse.org/downloads/packages/eclipse-classic-372/indigosr2
 
-The Scala-IDE plugin
+The Scala-IDE plugin, available from
 http://download.scala-ide.org/releases-210/milestone/site
 
-Create a new Eclipse project in the project folder and add the slick jar to the build path. You can find it in the ivy cache. 
+## New Projects ##
+Create a new Eclipse project and add the Slick jar to the build path. You can find it in the ivy cache.
 Under Windows it is located at %HOMEDRIVE%%HOMEPATH%\.ivy2\cache\com.typesafe\slick_2.10.0-M7\jars\slick_2.10.0-M7-0.11.1.jar
 Under Mac and Linux it is located at ~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar
