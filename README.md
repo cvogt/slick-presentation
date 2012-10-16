@@ -1,9 +1,8 @@
-This are code examples for the presentation to Bay Area Scala Enthusiasts accompanying the Slick presentation query library for Scala.
+This are code examples for the [Oct 15](http://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80269142/)
+and [Oct 17](http://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80268902/)
+presentations to Bay Area Scala Enthusiasts accompanying the
+[Slick](http://slick.typesafe.com) presentation query library for Scala.
 
-http://slick.typesafe.com
-
-://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80269142/
-http://www.meetup.com/Bay-Area-Scala-Enthusiasts/events/80268902/
 
 ## To Run ##
 
@@ -13,25 +12,28 @@ http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html
 Make sure `sbt` is in your PATH.
 
 You then need to clone this project
+
     git clone git://github.com/cvogt/slick-presentation
 
 Run the code example from SBT
+
     $ sbt run
 
 Or, start sbt and run the code example from within sbt
+
     $ sbt
     > run
 
 ## Requirements ##
-You can edit the example using your favorite editor or to get proper code completion you can use
+You can edit the example using your favorite editor or to get proper code completion you can use:
 
-Eclipse 3.7 (Juno), available from
+* Eclipse 3.7 (Juno), available from
 http://www.eclipse.org/downloads/packages/eclipse-classic-372/indigosr2
 
-The Scala-IDE plugin, available from
+* The Scala-IDE plugin, available from
 http://download.scala-ide.org/releases-210/milestone/site
 
 ## New Projects ##
 Create a new Eclipse project and add the Slick jar to the build path. You can find it in the ivy cache.
-Under Windows it is located at %HOMEDRIVE%%HOMEPATH%\.ivy2\cache\com.typesafe\slick_2.10.0-M7\jars\slick_2.10.0-M7-0.11.1.jar
-Under Mac and Linux it is located at ~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar
+Under Windows it is located at `%HOMEDRIVE%%HOMEPATH%\.ivy2\cache\com.typesafe\slick_2.10.0-M7\jars\slick_2.10.0-M7-0.11.1.jar`
+Under Mac and Linux it is located at `~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar`
