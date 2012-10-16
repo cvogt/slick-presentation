@@ -33,4 +33,4 @@ The Scala-IDE plugin
 http://download.scala-ide.org/releases-210/milestone/site
 
 Create a new Eclipse project in the project folder and add the slick jar to the build path. You can find it in the ivy cache. Under Windows it is located in you user directory under %HOMEDRIVE%%HOMEPATH%\.ivy2\cache\com.typesafe\slick_2.10.0-M7\jars\slick_2.10.0-M7-0.11.1.jar
-Under Mac and Linuxit is located in you user directory under ~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar
+Under Mac and Linux it is located in you user directory under ~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar
