@@ -28,9 +28,9 @@ Or, start sbt and run the code example from within sbt
 You can edit the example using your favorite editor or to get proper code completion you can use:
 
 * Eclipse 3.7 (Juno), available from
-http://www.eclipse.org/downloads/packages/eclipse-classic-372/indigosr2
+http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr1
 
-* The Scala-IDE plugin, available from
+* The Scala-IDE plugin, available from this Eclipse update site:
 http://download.scala-ide.org/releases-210/milestone/site
 
 ## New Projects ##
