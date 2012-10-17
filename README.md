@@ -15,7 +15,9 @@ You then need to clone this project
 
     git clone git://github.com/cvogt/slick-presentation
 
-Run the code example from SBT
+Change into the slick-presentation folder.
+
+Run the code example using SBT
 
     $ sbt run
 
@@ -33,7 +35,9 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr1
 * The Scala-IDE plugin, available from this Eclipse update site:
 http://download.scala-ide.org/releases-210/milestone/site
 
-## New Projects ##
-Create a new Eclipse project and add the Slick jar to the build path. You can find it in the ivy cache.
-Under Windows it is located at `%HOMEDRIVE%%HOMEPATH%\.ivy2\cache\com.typesafe\slick_2.10.0-M7\jars\slick_2.10.0-M7-0.11.1.jar`
-Under Mac and Linux it is located at `~.ivy2/cache/com.typesafe/slick_2.10.0-M7/jars/slick_2.10.0-M7-0.11.1.jar`
+## Eclipse ##
+To edit the project in eclipse you can generate the required eclipse project files like this:
+
+    $ sbt eclipse
+
+After that you can import the project into eclipse.
