@@ -46,19 +46,32 @@ object SlickPresentation extends App{
   }
     
   session.withTransaction{
-    // print certain people with their tasks
-    val somePeople = Persons.above(21)
-    val theirTasks = for( t <- Tasks; if t.personId in somePeople.map(_.id) ) yield t
+    // query people above 21 with their tasks
+    val somePeople = Persons.above(21).sortBy(_.name)
+    val theirTasks = (for( t <- Tasks; if t.personId in somePeople.map(_.id) ) yield t)
+    val theirTasksResults = theirTasks.list
+
+    val results = somePeople.list.map( p =>
+      p.name + ": " + theirTasksResults.filter(_.personId == p.id).map(_.title).mkString(", ")
+    ).mkString("\n")
     
-    println("\n\n")
-    println("-"*80)
-    println( "=== people and their tasks ===" )
-    somePeople.sortBy(_.name).foreach{ p =>
-      print( p.name + ": " )
-      println( theirTasks.filter(_.personId === p.id).map(_.title).list.mkString(", ") )
-    }
-    println("-"*80)
-    println("\n\n")
+    // print results (using Scala 2.10 string interpolation)
+    print(
+s"""
+
+
+=== result ===
+${results}
+
+=== generated sql queries ===
+somePeople: ${somePeople.selectStatement}
+
+theirTasks: ${theirTasks.selectStatement}
+
+
+
+"""
+    )
   }
   session.close()
 }
