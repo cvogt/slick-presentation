@@ -1,4 +1,4 @@
-These are the live coding examples for the 2013 Sep 17 [presentation at ny-scala](http://www.meetup.com/ny-scala/events/131452772/)
+These are the live coding examples for the 2013 Sep 25 [presentation at JavaOne](https://oracleus.activeevents.com/2013/connect/sessionDetail.ww?SESSION_ID=5199)
 about [Slick](http://slick.typesafe.com).
 
 ## Eclipse ##
