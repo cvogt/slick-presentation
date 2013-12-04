@@ -1,17 +1,18 @@
 /**
  * https://github.com/cvogt/slick-presentation/
- * branch: ny-scala-2013
+ * branch: 2013/sug-berlin
  */
+import demo.Tables._
 import scala.slick.driver.H2Driver.simple._
-import setup._
 
-object NyScala2013 extends App {
+object FinalCode {
   // connection info for a throw-away, in-memory db
-  val db = Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver")
+  val url = "jdbc:h2:mem:test;INIT=runscript from 'src/main/sql/create.sql'"
+  val db = Database.forURL(url, driver = "org.h2.Driver")
 
   // join as a method extension
-  implicit class CompaniesExtensions(val companies: Query[Companies, Company]) extends AnyVal{
-    def withComputers(computers: Query[Computers, Computer] = Computers) = for (
+  implicit class CompaniesExtensions(val companies: Query[Companies, CompaniesRow]) extends AnyVal{
+    def withComputers(computers: Query[Computers, ComputersRow] = Computers) = for (
       co <- companies;
       c <- computers;
       if co.id === c.manufacturerId
@@ -19,17 +20,16 @@ object NyScala2013 extends App {
   }
 
   // re-usable query component
-  def groups(pattern: Column[String]) =
+  def groups = (pattern: Column[String]) =>
     (for (
       (co, cs) <- Companies.withComputers(Computers.filter(_.name like pattern)).groupBy(_._1)
     ) yield (co.name, cs.length))
       .sortBy(_._2)
 
   // precompiled query
-  def groupsCompiled = Parameters[String].flatMap(groups)
+  def groupsCompiled = Compiled{ groups }
 
   db.withTransaction { implicit session =>
-    initDb
     groupsCompiled("%Mac%").foreach(println)
     groupsCompiled("%Mac%").foreach(println)
   }
