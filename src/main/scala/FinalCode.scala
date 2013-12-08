@@ -5,7 +5,7 @@
 import demo.Tables._
 import scala.slick.driver.H2Driver.simple._
 
-object FinalCode {
+object FinalCode extends App {
   // connection info for a throw-away, in-memory db
   val url = "jdbc:h2:mem:test;INIT=runscript from 'src/main/sql/create.sql'"
   val db = Database.forURL(url, driver = "org.h2.Driver")
