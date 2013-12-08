@@ -12,8 +12,8 @@ object stagedBuild extends Build {
     id="root",
     base=file("."),
     settings = sharedSettings ++ Seq(
-      slick <<= slickCodeGenTask // register sbt command
-      //sourceGenerators in Compile <+= slickCodeGenTask // register automatic source generator
+      slick <<= slickCodeGenTask, // register manual sbt command
+      sourceGenerators in Compile <+= slickCodeGenTask // register automatic source generator
     )
   ).dependsOn( slickProject, codegenProject )
   /** codegen project containing the customized code generator */
@@ -39,9 +39,10 @@ object stagedBuild extends Build {
   // code generation task that calls the customized code generator
   lazy val slick = TaskKey[Seq[File]]("gen-tables")
   lazy val slickCodeGenTask = (sourceManaged, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
-    val outputDir = "src/main/scala"
+    val outputDir = (dir / "slick").getPath // place generated files in sbt's managed sources folder
     toError(r.run("demo.CustomizedCodeGenerator", cp.files, Array(outputDir), s.log))
     val fname = outputDir + "/demo/Tables.scala"
+    println(fname)
     Seq(file(fname))
   }
 }
