@@ -3,7 +3,6 @@
  * branch: javaone-2013
  */
 
-import scala.slick.util.StringExtensions
 import demo.Config
 
 object Tables extends demo.Tables{
@@ -134,7 +133,7 @@ object CodeExamples extends App {
 
     // Code generator for Slick code
     def dont_run_1{
-      import scala.slick.meta.codegen.SourceCodeGenerator
+      import scala.slick.model.codegen.SourceCodeGenerator
       SourceCodeGenerator.main(
         Array(
             "scala.slick.driver.H2Driver",
@@ -172,11 +171,11 @@ object CodeExamples extends App {
     def dont_run_2{
       {
         // Use generator as a library
-        val metaModel = db.withSession{ implicit session =>
-          profile.metaModel // e.g. H2Driver.metaModel
+        val model = db.withSession{ implicit session =>
+          profile.model // e.g. H2Driver.model
         }
-        import  scala.slick.meta.codegen.SourceCodeGenerator
-        val codegen = new SourceCodeGenerator(metaModel){
+        import  scala.slick.model.codegen.SourceCodeGenerator
+        val codegen = new SourceCodeGenerator(model){
           // <- customize here
         }
         codegen.writeToFile(
@@ -189,9 +188,8 @@ object CodeExamples extends App {
       }
       ;{
         // Adjust name mapping
-        import  scala.slick.meta.codegen.SourceCodeGenerator
-        import scala.slick.util.StringExtensions._
-        val codegen = new SourceCodeGenerator(profile.metaModel){
+        import  scala.slick.model.codegen.SourceCodeGenerator
+        val codegen = new SourceCodeGenerator(profile.model){
           override def tableName = dbName => dbName.toLowerCase.toCamelCase
           override def entityName = tableName(_).dropRight(1) // Supplier, defaults to SuppliersRow
         }

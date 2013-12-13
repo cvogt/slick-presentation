@@ -1,14 +1,13 @@
 package demo 
-import scala.slick.meta.Model
-import scala.slick.util.StringExtensions
+import scala.slick.model.Model
 import scala.slick.driver.H2Driver
 import Config._
 
 object CustomizedCodeGenerator{
   def main(args: Array[String]) = {
     val db = H2Driver.simple.Database.forURL(url,driver=jdbcDriver)
-    val model = db.withSession(H2Driver.metaModel(_))
-    val codegen = new scala.slick.meta.codegen.SourceCodeGenerator(model){
+    val model = db.withSession(H2Driver.model(_))
+    val codegen = new scala.slick.model.codegen.SourceCodeGenerator(model){
       def writeToFile = {
         // package up code with Interface
         val packageCode = s"""
@@ -29,35 +28,41 @@ trait Tables extends Interfaces{
           "Tables.scala"
         )
       }
+
+      // customize scala entity name (case class, etc.)
+      override def entityName = dbTableName => dbTableName match {
+        case "COFFEES" => "Coffee"
+        case "SUPPLIERS" => "Supplier"
+        case _ => super.entityName(dbTableName)
+      }
       
       // override generator responsible for tables
       override def Table = new Table(_){
-        // customize TableQuery val name
-        override def tableValueName = super.tableValueName.uncapitalize
-        // customize case class name
-        override def entityClassName = (meta.name.table) match {
-          case "COFFEES" => "Coffee"
-          case "SUPPLIERS" => "Supplier"
-          case _ => super.entityClassName
-        }
+        table =>
         // add some parents to selected Table classes
-        override def tableClassParents = tableClassName match {
-          case "Coffees" | "CofInventory" => Seq("HasSuppliers")
-          case _ => Seq()
+        override def TableClass = new TableClass{
+          override def parents = name match {
+            case "Coffees" | "CofInventory" => Seq("HasSuppliers")
+            case _ => Seq()
+          }
+          override def body = super.body ++ ( name match{
+            case "Coffees" => Seq(Seq("def revenue = price.asColumnOf[Double] * sales.asColumnOf[Double]"))
+            case _ => Seq()
+          })
         }
-        override def tableClassBody = super.tableClassBody ++ ( tableClassName match{
-          case "Coffees" => Seq(Seq("def revenue = price.asColumnOf[Double] * sales.asColumnOf[Double]"))
-          case _ => Seq()
-        })
+        // customize table value name
+        override def TableValue = new TableValue{
+          override def rawName = super.rawName.uncapitalize
+        }
         // override generator responsible for columns
         override def Column = new Column(_){
           // customize column method names
-          override def name = (table.meta.name.table,this.meta.name) match {
+          override def rawName = (table.model.name.table,this.model.name) match {
             case ("COFFEES","COF_NAME") => "name"
             case ("SUPPLIERS","SUP_ID") => "id"
             case ("SUPPLIERS","SUP_NAME") => "name"
             case ("COF_INVENTORY","QUAN") => "quantity"
-            case _ => super.name
+            case _ => super.rawName
           }
         }
       }
@@ -75,14 +80,14 @@ object AutoJoins{
       // assemble autojoin conditions
       val joins = tables.flatMap( _.foreignKeys.map{ foreignKey =>
         import foreignKey._
-        val fkt = referencingTable.tableClassName
-        val pkt = referencedTable.tableClassName
+        val fkt = referencingTable.TableClass.name
+        val pkt = referencedTable.TableClass.name
         val columns = referencingColumns.map(_.name) zip referencedColumns.map(_.name)
-        s"""implicit def autojoin${name.capitalize} = (left:${fkt},right:${pkt}) => """ +
+        s"""implicit def autojoin${fkt}${name.capitalize} = (left:${fkt},right:${pkt}) => """ +
         columns.map{
           case (lcol,rcol) => "left."+lcol + " === " + "right."+rcol
         }.mkString(" && ") + "\n" +
-        s"""implicit def autojoin${name.capitalize}Reverse = (left:${pkt},right:${fkt}) => """ +
+        s"""implicit def autojoin${fkt}${name.capitalize}Reverse = (left:${pkt},right:${fkt}) => """ +
         columns.map(_.swap).map{
           case (lcol,rcol) => "left."+lcol + " === " + "right."+rcol
         }.mkString(" && ")
