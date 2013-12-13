@@ -18,7 +18,7 @@ object myBuild extends Build {
     )
   ).dependsOn( slickProject )
 
-  lazy val slickProject = ProjectRef( uri("git://github.com/slick/slick.git#2c8f3a7cf311c9779aa778503014e3bfcbf3c2a1"), "slick")
+  lazy val slickProject = ProjectRef( uri("git://github.com/slick/slick.git#56fb3cdaed15e8f30e41489a4aeba96bf0426f6b"), "slick")
                        // ProjectRef( file("../slick"), "slick")
   
   // code generation task
@@ -29,7 +29,7 @@ object myBuild extends Build {
     val jdbcDriver = "org.h2.Driver"
     val slickDriver = "scala.slick.driver.H2Driver"
     val pkg = "demo"
-    toError(r.run("scala.slick.meta.codegen.SourceCodeGenerator", cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg), s.log))
+    toError(r.run("scala.slick.model.codegen.SourceCodeGenerator", cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg), s.log))
     val fname = outputDir + "/demo/Tables.scala"
     Seq(file(fname))
   }
