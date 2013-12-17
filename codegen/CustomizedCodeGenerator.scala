@@ -6,7 +6,7 @@ import Config._
 object CustomizedCodeGenerator{
   def main(args: Array[String]) = {
     val db = H2Driver.simple.Database.forURL(url,driver=jdbcDriver)
-    val model = db.withSession(H2Driver.model(_))
+    val model = db.withSession(H2Driver.createModel(_))
     val codegen = new scala.slick.model.codegen.SourceCodeGenerator(model){
       def writeToFile = {
         // package up code with Interface

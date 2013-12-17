@@ -172,7 +172,7 @@ object CodeExamples extends App {
       {
         // Use generator as a library
         val model = db.withSession{ implicit session =>
-          profile.model // e.g. H2Driver.model
+          profile.createModel // e.g. H2Driver.model
         }
         import  scala.slick.model.codegen.SourceCodeGenerator
         val codegen = new SourceCodeGenerator(model){
@@ -189,7 +189,7 @@ object CodeExamples extends App {
       ;{
         // Adjust name mapping
         import  scala.slick.model.codegen.SourceCodeGenerator
-        val codegen = new SourceCodeGenerator(profile.model){
+        val codegen = new SourceCodeGenerator(profile.createModel){
           override def tableName = dbName => dbName.toLowerCase.toCamelCase
           override def entityName = tableName(_).dropRight(1) // Supplier, defaults to SuppliersRow
         }

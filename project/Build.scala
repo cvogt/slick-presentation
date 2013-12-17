@@ -23,7 +23,7 @@ object stagedBuild extends Build {
     settings = sharedSettings
   ).dependsOn( slickProject )
                                       // unreleased Slick version, which can replaced by RC1, once it's out
-  lazy val slickProject = ProjectRef( uri("git://github.com/slick/slick.git#56fb3cdaed15e8f30e41489a4aeba96bf0426f6b"), "slick")
+  lazy val slickProject = ProjectRef( uri("git://github.com/slick/slick.git#d12055c08e70d22d0cf73e175f70f42c497a3ea1"), "slick")
                        // ProjectRef( file("../slick"), "slick")
   
   // shared sbt config between main project and codegen project
